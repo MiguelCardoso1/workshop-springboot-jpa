@@ -1,8 +1,10 @@
 package br.com.projeto.projeto_Web.config;
 
+import br.com.projeto.projeto_Web.entities.Category;
 import br.com.projeto.projeto_Web.entities.Order;
 import br.com.projeto.projeto_Web.entities.User;
 import br.com.projeto.projeto_Web.entities.enums.OrderStatus;
+import br.com.projeto.projeto_Web.repositories.CategoryRepository;
 import br.com.projeto.projeto_Web.repositories.OrderRepository;
 import br.com.projeto.projeto_Web.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,19 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
         User u1 = new User(1, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(2, "Alex Green", "alex@gmail.com", "977777777", "123456");
+
+        categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
 
         Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);

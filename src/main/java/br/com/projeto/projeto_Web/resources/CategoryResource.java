@@ -1,6 +1,5 @@
 package br.com.projeto.projeto_Web.resources;
 
-
 import br.com.projeto.projeto_Web.entities.Category;
 import br.com.projeto.projeto_Web.entities.Order;
 import br.com.projeto.projeto_Web.services.OrderService;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/orders")
-public class OrderResource {
-
+@RequestMapping(value = "/categories")
+public class CategoryResource {
     @Autowired
     private OrderService service;
 
