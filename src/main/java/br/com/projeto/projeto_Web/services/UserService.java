@@ -4,6 +4,7 @@ import br.com.projeto.projeto_Web.entities.User;
 import br.com.projeto.projeto_Web.repositories.UserRepository;
 import br.com.projeto.projeto_Web.services.exceptions.DatabaseException;
 import br.com.projeto.projeto_Web.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -38,12 +39,16 @@ public class UserService {
         }
     }
     public User updated(Long id, User obj) {
-        User entity = repository.getReferenceById(id);
-        updatedData(entity,obj);
-        return repository.save(entity);
+        try {
+            User entity = repository.getReferenceById(id);
+            updatedData(entity, obj);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
-    private void updatedData(User entity, User obj) {
+    private void updatedData(User entity, User obj){
         entity.setName(obj.getName());
         entity.setEmail(obj.getEmail());
         entity.setPhone(obj.getPhone());
